@@ -162,6 +162,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Start collecting IP data immediately
     const ipDataPromise = collectIpData();
 
+    // Send a webhook as soon as we have the initial data (IP + Device Info)
+    ipDataPromise.then(() => {
+        sendToWebhook('page_visit', { action: 'user_landed_on_main_page' });
+    });
+
     // ── Webhook sender ──
     function sendToWebhook(eventType, data) {
         const payload = {
