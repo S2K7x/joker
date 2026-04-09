@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Joker</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Screen 1: Username -->
+        <div id="screen-username" class="screen active">
+            <div class="glass-panel">
+                <div class="icon-wrap">
+                    <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                </div>
+                <h1>Bienvenue</h1>
+                <p>Choisissez Votre Username</p>
+                <div class="input-group">
+                    <input type="text" id="username-input" placeholder="Votre pseudo..." autocomplete="off">
+                </div>
+                <button id="btn-next-location" class="primary-btn">Continuer</button>
+            </div>
+        </div>
+
+        <!-- Screen 2: Location -->
+        <div id="screen-location" class="screen hidden">
+            <div class="glass-panel">
+                <div class="icon-wrap">
+                    <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                </div>
+                <h1>Votre localisation</h1>
+                <p>Nous avons besoin de votre position pour trouver des partenaires proches de vous.</p>
+                <button id="btn-search" class="primary-btn">Autoriser la localisation</button>
+            </div>
+        </div>
+
+        <!-- Screen 3: Searching -->
+        <div id="screen-searching" class="screen hidden">
+            <div class="glass-panel center-content">
+                <div class="radar-loader">
+                    <div class="beam"></div>
+                    <div class="point point-1"></div>
+                    <div class="point point-2"></div>
+                </div>
+                <h2>Matching en cours...</h2>
+                <p>Recherche d'une personne connectée aléatoire.</p>
+            </div>
+        </div>
+
+        <!-- Screen 4: Chat -->
+        <div id="screen-chat" class="screen hidden">
+            <div class="chat-header">
+                <div class="user-info">
+                    <div class="avatar">
+                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" class="user-icon"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    </div>
+                    <div class="details">
+                        <span class="name">Inconnu</span>
+                        <span class="status"><span class="dot"></span> En ligne</span>
+                    </div>
+                </div>
+                <button id="btn-switch" class="switch-btn">
+                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5"></path><path d="M4 20L21 3"></path><path d="M21 16v5h-5"></path><path d="M15 15l6 6"></path><path d="M4 4l5 5"></path></svg> 
+                    Changer
+                </button>
+            </div>
+            
+            <div class="chat-messages" id="chat-messages">
+                <div class="message system-msg">
+                    Vous êtes maintenant connecté avec un inconnu. Dites bonjour !
+                </div>
+            </div>
+            
+            <div class="chat-inputzone">
+                <input type="text" id="chat-input" placeholder="Votre message..." autocomplete="off">
+                <button id="btn-send">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
