@@ -1,86 +1,137 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Oh-My-Chat!</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="description" content="Chicken Road — Cross the road, dodge the cars, climb the leaderboard. A fast-paced arcade survival game." />
+  <title>Chicken Road — Cross & Survive</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div id="app">
-        <!-- Screen 1: Username -->
-        <div id="screen-username" class="screen active">
-            <div class="glass-panel">
-                <div class="icon-wrap">
-                    <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                </div>
-                <h1>Try your luck</h1>
-                <p>Choisissez Votre Username</p>
-                <div class="input-group">
-                    <input type="text" id="username-input" placeholder="Votre pseudo..." autocomplete="off">
-                </div>
-                <button id="btn-next-location" class="primary-btn">Continuer</button>
-            </div>
-        </div>
 
-        <!-- Screen 2: Location -->
-        <div id="screen-location" class="screen hidden">
-            <div class="glass-panel">
-                <div class="icon-wrap">
-                    <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                </div>
-                <h1>Votre localisation</h1>
-                <p>Nous avons besoin de votre position pour trouver des partenaires proches de vous.</p>
-                <button id="btn-search" class="primary-btn">Autoriser la localisation</button>
-            </div>
-        </div>
+  <!-- ══════════════ SCREEN 1 — USERNAME ══════════════ -->
+  <div id="screen-username" class="screen active">
+    <div class="stars-bg"></div>
+    <div class="username-container">
+      <div class="game-logo">
+        <div class="chicken-emoji">🐔</div>
+        <h1 class="game-title">CHICKEN<br/>ROAD</h1>
+      </div>
+      <p class="subtitle">Cross the road. Dodge the traffic. Survive.</p>
 
-        <!-- Screen 3: Searching -->
-        <div id="screen-searching" class="screen hidden">
-            <div class="glass-panel center-content">
-                <div class="radar-loader">
-                    <div class="beam"></div>
-                    <div class="point point-1"></div>
-                    <div class="point point-2"></div>
-                </div>
-                <h2>Matching en cours...</h2>
-                <p>Recherche d'une personne connectée aléatoire.</p>
-            </div>
+      <div class="input-group">
+        <label for="username-input" class="input-label">Your Username</label>
+        <div class="input-wrapper">
+          <span class="input-icon">👾</span>
+          <input
+            type="text"
+            id="username-input"
+            placeholder="e.g. SpeedChick99"
+            maxlength="20"
+            autocomplete="off"
+            autocorrect="off"
+            spellcheck="false"
+          />
         </div>
+        <button id="btn-play" class="btn-primary">
+          <span class="btn-text">PLAY NOW</span>
+          <span class="btn-arrow">→</span>
+        </button>
+        <!-- Error / tries message -->
+        <div id="username-error" class="username-error hidden"></div>
+        <p class="input-hint">* Your name will appear on the global leaderboard</p>
+      </div>
 
-        <!-- Screen 4: Chat -->
-        <div id="screen-chat" class="screen hidden">
-            <div class="chat-header">
-                <div class="user-info">
-                    <div class="avatar">
-                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" class="user-icon"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                    </div>
-                    <div class="details">
-                        <span class="name">Inconnu</span>
-                        <span class="status"><span class="dot"></span> En ligne</span>
-                    </div>
-                </div>
-                <button id="btn-switch" class="switch-btn">
-                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5"></path><path d="M4 20L21 3"></path><path d="M21 16v5h-5"></path><path d="M15 15l6 6"></path><path d="M4 4l5 5"></path></svg> 
-                    Changer
-                </button>
-            </div>
-            
-            <div class="chat-messages" id="chat-messages">
-                <div class="message system-msg">
-                    Vous êtes maintenant connecté avec un inconnu. Dites bonjour !
-                </div>
-            </div>
-            
-            <div class="chat-inputzone">
-                <input type="text" id="chat-input" placeholder="Votre message..." autocomplete="off">
-                <button id="btn-send">
-                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-                </button>
-            </div>
-        </div>
+      <div class="floating-decoration">
+        <span class="deco-car car1">🚗</span>
+        <span class="deco-car car2">🚛</span>
+        <span class="deco-car car3">🚕</span>
+      </div>
     </div>
-    <script src="script.js"></script>
+  </div>
+
+  <!-- ══════════════ SCREEN 2 — GAME ══════════════ -->
+  <div id="screen-game" class="screen hidden">
+
+    <!-- Three.js Canvas -->
+    <canvas class="game"></canvas>
+
+    <!-- HUD: Score + Tries -->
+    <div id="hud">
+      <div id="score">0</div>
+      <div id="tries-hud"></div>
+    </div>
+
+    <!-- Mobile D-Pad Controls -->
+    <div id="controls">
+      <div class="dpad">
+        <button id="forward"  class="dpad-btn dpad-up"    aria-label="Move Up">▲</button>
+        <div class="dpad-middle-row">
+          <button id="left"   class="dpad-btn dpad-left"  aria-label="Move Left">◀</button>
+          <div class="dpad-center"></div>
+          <button id="right"  class="dpad-btn dpad-right" aria-label="Move Right">▶</button>
+        </div>
+        <button id="backward" class="dpad-btn dpad-down"  aria-label="Move Down">▼</button>
+      </div>
+    </div>
+
+    <!-- ══ GAME OVER OVERLAY ══ -->
+    <div id="result-container">
+      <div id="result">
+
+        <div class="result-header">
+          <div class="result-emoji">💀</div>
+          <h2 class="result-title">GAME OVER</h2>
+        </div>
+
+        <div class="score-display">
+          <span class="score-label">YOUR SCORE</span>
+          <span id="final-score" class="score-value">0</span>
+        </div>
+
+        <!-- Leaderboard — always shown first -->
+        <div id="leaderboard-section">
+          <div class="leaderboard-header">
+            <h3>🏆 TOP 10 — GLOBAL</h3>
+          </div>
+          <div id="leaderboard-loading" class="leaderboard-loading">
+            <span class="loading-dot"></span>
+            <span class="loading-dot"></span>
+            <span class="loading-dot"></span>
+          </div>
+          <ol id="leaderboard-list"></ol>
+        </div>
+
+        <!-- Location / submit prompt -->
+        <div id="location-section">
+          <p class="location-text">🌍 Add your score to the leaderboard?</p>
+          <p class="location-subtext">We need your location to show your country's flag.</p>
+          <div class="location-buttons">
+            <button id="btn-allow-location" class="btn-location-allow">
+              📍 Add My Score
+            </button>
+            <button id="btn-skip-location" class="btn-location-skip">
+              Skip
+            </button>
+          </div>
+        </div>
+
+        <!-- Retry row -->
+        <div class="retry-row">
+          <button id="retry" class="btn-retry">↻ PLAY AGAIN</button>
+          <p id="tries-info" class="tries-info"></p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+  <script type="module" src="script2.js"></script>
+
 </body>
 </html>
