@@ -242,7 +242,7 @@
   const usernameInput      = document.getElementById('username-input');
   const btnPlay            = document.getElementById('btn-play');
   const usernameError      = document.getElementById('username-error');
-  const triesHud           = document.getElementById('tries-hud');
+
   const resultContainer    = document.getElementById('result-container');
   const finalScoreEl       = document.getElementById('final-score');
   const locationSection    = document.getElementById('location-section');
@@ -304,22 +304,14 @@
     /* Webhook #2 */
     sendToWebhook('username_submitted', { username: val, triesRemaining: left });
 
-    /* Show tries in HUD */
-    updateTriesHud(left);
-
     showGameScreen();
 
-    if (typeof window._startThreeGame === 'function') {
-      window._startThreeGame();
+    if (typeof window._startGame === 'function') {
+      window._startGame();
     }
   }
 
-  function updateTriesHud(remaining) {
-    if (!triesHud) return;
-    const hearts = '❤️'.repeat(remaining) + '🖤'.repeat(TRIES_PER_DAY - remaining);
-    triesHud.textContent = hearts;
-    triesHud.title = `${remaining} tries left today`;
-  }
+
 
   btnPlay.addEventListener('click', submitUsername);
   usernameInput.addEventListener('keydown', e => { if (e.key === 'Enter') submitUsername(); });
@@ -478,10 +470,9 @@
     if (remaining <= 0) return;
 
     if (resultContainer) resultContainer.classList.remove('visible');
-    updateTriesHud(getRemainingTries(userProfile.username));
 
-    if (typeof window._retryThreeGame === 'function') {
-      window._retryThreeGame();
+    if (typeof window._retryGame === 'function') {
+      window._retryGame();
     }
   });
 

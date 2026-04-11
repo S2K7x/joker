@@ -372,18 +372,9 @@ canvas.game {
   letter-spacing: 2px;
 }
 
-/* Tries hearts */
-#tries-hud {
-  font-size: 14px;
-  letter-spacing: 2px;
-  opacity: 0.85;
-  background: rgba(0,0,0,0.35);
-  padding: 3px 10px;
-  border-radius: 100px;
-  backdrop-filter: blur(4px);
-}
 
-/* D-Pad Controls */
+
+/* Flap Button Controls */
 #controls {
   position: fixed;
   bottom: 28px;
@@ -392,52 +383,35 @@ canvas.game {
   z-index: 10;
 }
 
-.dpad {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-}
-
-.dpad-middle-row {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.dpad-center {
-  width: 56px;
-  height: 56px;
-  background: rgba(255,255,255,0.03);
-  border-radius: 8px;
-}
-
-.dpad-btn {
-  width: 56px;
-  height: 56px;
-  background: rgba(0,0,0,0.55);
-  border: 1.5px solid rgba(0,245,255,0.35);
-  border-radius: 10px;
-  color: rgba(0,245,255,0.9);
-  font-size: 20px;
-  cursor: pointer;
-  outline: none;
-  backdrop-filter: blur(8px);
-  transition: background 0.1s, transform 0.1s, border-color 0.1s;
+.flap-button {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 12px;
+  width: 200px;
+  height: 64px;
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  border: 2px solid #FF8C00;
+  border-radius: 32px;
+  color: #5C3A21;
+  font-family: var(--font-pixel);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 8px 0 #CC7000, 0 15px 20px rgba(0,0,0,0.4);
+  transition: transform 0.1s, box-shadow 0.1s;
   user-select: none;
-  -webkit-user-select: none;
   touch-action: manipulation;
-  box-shadow: 0 0 12px rgba(0,245,255,0.15), inset 0 1px 0 rgba(255,255,255,0.1);
 }
 
-.dpad-btn:active {
-  background: rgba(0,245,255,0.2);
-  border-color: var(--accent-cyan);
-  transform: scale(0.92);
-  box-shadow: 0 0 20px rgba(0,245,255,0.4);
+.flap-button:active {
+  transform: translateY(6px);
+  box-shadow: 0 2px 0 #CC7000, 0 5px 10px rgba(0,0,0,0.4);
+}
+
+.flap-icon {
+  font-size: 24px;
 }
 
 
