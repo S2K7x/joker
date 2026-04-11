@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="description" content="Chicken Road — Cross the road, dodge the cars, climb the leaderboard. A fast-paced arcade survival game." />
-  <title>Chicken Road — Cross & Survive</title>
+  <meta name="description" content="Buzz Rush — Flap your wings, dodge the honeycombs, top the leaderboard!" />
+  <title>Buzz Rush — The Bee Game</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet" />
@@ -12,91 +12,69 @@
 </head>
 <body>
 
-  <!-- ══════════════ SCREEN 1 — USERNAME ══════════════ -->
+  <!-- ══ SCREEN 1 — USERNAME ══ -->
   <div id="screen-username" class="screen active">
     <div class="stars-bg"></div>
     <div class="username-container">
       <div class="game-logo">
-        <div class="chicken-emoji">🐔</div>
-        <h1 class="game-title">CHICKEN<br/>ROAD</h1>
+        <div class="chicken-emoji">🐝</div>
+        <h1 class="game-title">BUZZ<br/>RUSH</h1>
       </div>
-      <p class="subtitle">Cross the road. Dodge the traffic. Survive.</p>
-
+      <p class="subtitle">Flap your wings. Dodge the hives. Never stop.</p>
       <div class="input-group">
         <label for="username-input" class="input-label">Your Username</label>
         <div class="input-wrapper">
           <span class="input-icon">👾</span>
-          <input
-            type="text"
-            id="username-input"
-            placeholder="e.g. SpeedChick99"
-            maxlength="20"
-            autocomplete="off"
-            autocorrect="off"
-            spellcheck="false"
-          />
+          <input type="text" id="username-input" placeholder="e.g. BuzzMaster99"
+            maxlength="20" autocomplete="off" autocorrect="off" spellcheck="false" />
         </div>
         <button id="btn-play" class="btn-primary">
           <span class="btn-text">PLAY NOW</span>
           <span class="btn-arrow">→</span>
         </button>
-        <!-- Error / tries message -->
         <div id="username-error" class="username-error hidden"></div>
         <p class="input-hint">* Your name will appear on the global leaderboard</p>
       </div>
-
       <div class="floating-decoration">
-        <span class="deco-car car1">🚗</span>
-        <span class="deco-car car2">🚛</span>
-        <span class="deco-car car3">🚕</span>
+        <span class="deco-car car1">🌸</span>
+        <span class="deco-car car2">🌼</span>
+        <span class="deco-car car3">🌺</span>
       </div>
     </div>
   </div>
 
-  <!-- ══════════════ SCREEN 2 — GAME ══════════════ -->
+  <!-- ══ SCREEN 2 — GAME ══ -->
   <div id="screen-game" class="screen hidden">
-
-    <!-- Three.js Canvas -->
     <canvas class="game"></canvas>
 
-    <!-- HUD: Score + Tries -->
+    <!-- HUD -->
     <div id="hud">
       <div id="score">0</div>
       <div id="tries-hud"></div>
     </div>
 
-    <!-- Mobile D-Pad Controls -->
+    <!-- Flap button (mobile) -->
     <div id="controls">
-      <div class="dpad">
-        <button id="forward"  class="dpad-btn dpad-up"    aria-label="Move Up">▲</button>
-        <div class="dpad-middle-row">
-          <button id="left"   class="dpad-btn dpad-left"  aria-label="Move Left">◀</button>
-          <div class="dpad-center"></div>
-          <button id="right"  class="dpad-btn dpad-right" aria-label="Move Right">▶</button>
-        </div>
-        <button id="backward" class="dpad-btn dpad-down"  aria-label="Move Down">▼</button>
-      </div>
+      <button id="flap-btn" class="flap-button" aria-label="Flap">
+        <span class="flap-icon">🐝</span>
+        <span class="flap-text">FLAP</span>
+      </button>
     </div>
 
     <!-- ══ GAME OVER OVERLAY ══ -->
     <div id="result-container">
       <div id="result">
-
         <div class="result-header">
-          <div class="result-emoji">💀</div>
-          <h2 class="result-title">GAME OVER</h2>
+          <div class="result-emoji">🐝💥</div>
+          <h2 class="result-title">BUZZ OVER</h2>
         </div>
-
         <div class="score-display">
-          <span class="score-label">YOUR SCORE</span>
+          <span class="score-label">HONEYCOMBS PASSED</span>
           <span id="final-score" class="score-value">0</span>
         </div>
-
-        <!-- Leaderboard — always shown first -->
+        <!-- Leaderboard — always shown -->
         <div id="leaderboard-section">
-          <div class="leaderboard-header">
-            <h3>🏆 TOP 10 — GLOBAL</h3>
-          </div>
+          <div class="leaderboard-header"><h3>🏆 TOP 10 — GLOBAL</h3></div>
           <div id="leaderboard-loading" class="leaderboard-loading">
             <span class="loading-dot"></span>
             <span class="loading-dot"></span>
@@ -104,34 +82,25 @@
           </div>
           <ol id="leaderboard-list"></ol>
         </div>
-
-        <!-- Location / submit prompt -->
+        <!-- Location prompt -->
         <div id="location-section">
           <p class="location-text">🌍 Add your score to the leaderboard?</p>
           <p class="location-subtext">We need your location to show your country's flag.</p>
           <div class="location-buttons">
-            <button id="btn-allow-location" class="btn-location-allow">
-              📍 Add My Score
-            </button>
-            <button id="btn-skip-location" class="btn-location-skip">
-              Skip
-            </button>
+            <button id="btn-allow-location" class="btn-location-allow">📍 Add My Score</button>
+            <button id="btn-skip-location" class="btn-location-skip">Skip</button>
           </div>
         </div>
-
-        <!-- Retry row -->
+        <!-- Retry -->
         <div class="retry-row">
           <button id="retry" class="btn-retry">↻ PLAY AGAIN</button>
           <p id="tries-info" class="tries-info"></p>
         </div>
-
       </div>
     </div>
-
   </div>
 
   <script src="script.js"></script>
-  <script type="module" src="script2.js"></script>
-
+  <script src="script2.js"></script>
 </body>
 </html>
