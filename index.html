@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="description" content="Buzz Rush — Flap your wings, dodge the honeycombs, top the leaderboard!" />
-  <title>Buzz Rush — The Bee Game</title>
+  <meta name="description" content="Power Click — Tap to rule the universe!" />
+  <title>Power Click — Tap to Rule the Universe</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet" />
@@ -12,91 +12,238 @@
 </head>
 <body>
 
-  <!-- ══ SCREEN 1 — USERNAME ══ -->
+  <!-- ══ SCREEN 1 — LOGIN ══ -->
   <div id="screen-username" class="screen active">
     <div class="stars-bg"></div>
     <div class="username-container">
+
       <div class="game-logo">
-        <div class="chicken-emoji">🐝</div>
-        <h1 class="game-title">BUZZ<br/>RUSH</h1>
+        <div class="logo-anim">🪨</div>
+        <h1 class="game-title">POWER<br/>CLICK</h1>
       </div>
-      <p class="subtitle">Flap your wings. Dodge the hives. Never stop.</p>
+      <p class="subtitle">Tap. Upgrade. Prestige. Dominate the universe.</p>
+
+      <!-- Account explanation card -->
+      <div class="account-note">
+        <div class="account-note-icon">🔐</div>
+        <div class="account-note-text">
+          <strong>An account — why?</strong><br/>
+          Your progress is saved in the cloud so you can continue on any device, anytime. No email needed.
+        </div>
+      </div>
+
       <div class="input-group">
-        <label for="username-input" class="input-label">Your Username</label>
+
+        <label for="username-input" class="input-label">Username</label>
         <div class="input-wrapper">
           <span class="input-icon">👾</span>
-          <input type="text" id="username-input" placeholder="e.g. BuzzMaster99"
-            maxlength="20" autocomplete="off" autocorrect="off" spellcheck="false" />
+          <input type="text" id="username-input" placeholder="e.g. TapMaster99"
+            maxlength="20" autocomplete="username" autocorrect="off" spellcheck="false" />
         </div>
+
+        <label for="password-input" class="input-label">Password</label>
+        <div class="input-wrapper">
+          <span class="input-icon">🔑</span>
+          <input type="password" id="password-input" placeholder="Choose a password"
+            maxlength="50" autocomplete="current-password" />
+          <button class="pwd-toggle" id="pwd-toggle" type="button" aria-label="Show/hide password">
+            <span id="pwd-toggle-icon">👁</span>
+          </button>
+        </div>
+
         <button id="btn-play" class="btn-primary">
-          <span class="btn-text">PLAY NOW</span>
+          <span id="btn-play-text" class="btn-text">START CLICKING</span>
           <span class="btn-arrow">→</span>
         </button>
+
         <div id="username-error" class="username-error hidden"></div>
-        <p class="input-hint">* Your name will appear on the global leaderboard</p>
+        <p class="input-hint">New here? We create your account automatically.<br/>Already registered? Enter the same password to continue.</p>
       </div>
-      <div class="floating-decoration">
-        <span class="deco-car car1">🌸</span>
-        <span class="deco-car car2">🌼</span>
-        <span class="deco-car car3">🌺</span>
+
+      <div class="phase-preview">
+        <span>🪨</span><span class="arr">›</span>
+        <span>💎</span><span class="arr">›</span>
+        <span>⚡</span><span class="arr">›</span>
+        <span>⭐</span><span class="arr">›</span>
+        <span>🌌</span><span class="arr">›</span>
+        <span>🌈</span>
       </div>
     </div>
   </div>
 
   <!-- ══ SCREEN 2 — GAME ══ -->
   <div id="screen-game" class="screen hidden">
-    <canvas class="game"></canvas>
 
-    <!-- HUD: Score -->
+    <!-- Daily bonus banner -->
+    <div id="daily-bonus-banner" class="daily-bonus-banner hidden">
+      🎁 Daily bonus! +<span id="daily-bonus-amount">0</span> power
+    </div>
+
+    <!-- HUD -->
     <div id="hud">
-      <div id="score">0</div>
+      <div class="hud-block">
+        <span class="hud-label">POWER</span>
+        <span id="coins-value" class="hud-big">0</span>
+      </div>
+      <div class="hud-block hud-center">
+        <span id="cps-value" class="hud-cps">0/s</span>
+      </div>
+      <div class="hud-block hud-right">
+        <span class="hud-label">TAP</span>
+        <span id="cpc-display" class="hud-cpc">+1</span>
+      </div>
     </div>
 
-    <!-- Flap button (mobile) -->
-    <div id="controls">
-      <button id="flap-btn" class="flap-button" aria-label="Flap">
-        <span class="flap-icon">🐝</span>
-        <span class="flap-text">FLAP</span>
-      </button>
+    <!-- Click area -->
+    <div id="click-area">
+      <div id="click-wrapper">
+
+        <!-- Combo display -->
+        <div id="combo-display" class="combo-display hidden">
+          <span id="combo-count">x2</span>
+          <span class="combo-label">COMBO!</span>
+        </div>
+
+        <div id="click-object" class="click-object phase-1">
+          <div id="click-emoji" class="click-emoji">🪨</div>
+          <div class="ring r1"></div>
+          <div class="ring r2"></div>
+          <div class="ring r3"></div>
+        </div>
+        <div id="phase-name" class="phase-name">STONE</div>
+        <div class="tap-hint">Tap fast to build a <strong>COMBO</strong>!</div>
+      </div>
+      <div id="float-zone"></div>
     </div>
 
-    <!-- ══ GAME OVER OVERLAY ══ -->
-    <div id="result-container">
-      <div id="result">
-        <div class="result-header">
-          <div class="result-emoji">🐝💥</div>
-          <h2 class="result-title">BUZZ OVER</h2>
+    <!-- Stats bar -->
+    <div id="stats-bar">
+      <div class="stat-pill">
+        <span class="sp-label">ALL TIME</span>
+        <span class="sp-val" id="total-earned-val">0</span>
+      </div>
+      <div class="stat-pill sp-center">
+        <button id="btn-prestige" class="btn-prestige hidden">✨ PRESTIGE!</button>
+        <span class="sp-label" id="prestige-idle-label">PRESTIGE</span>
+        <span class="sp-val gold" id="prestige-count-val">0</span>
+      </div>
+      <div class="stat-pill">
+        <span class="sp-label">MULTIPLIER</span>
+        <span class="sp-val cyan" id="multi-val">x1</span>
+      </div>
+    </div>
+
+    <!-- ══ BOTTOM PANEL — tabbed ══ -->
+    <div id="shop-panel">
+
+      <div class="tab-bar">
+        <button class="tab-btn tab-active" data-tab="upgrades">⚡ UPGRADES</button>
+        <button class="tab-btn" data-tab="ranking">🏆 RANKING</button>
+        <button class="tab-btn" data-tab="achievements">🏅 FEATS</button>
+      </div>
+
+      <!-- Tab: Upgrades -->
+      <div id="tab-upgrades" class="tab-pane">
+        <div class="tab-pane-header">
+          <span class="tp-label">BALANCE</span>
+          <span class="shop-balance"><span id="shop-coins">0</span> power</span>
         </div>
-        <div class="score-display">
-          <span class="score-label">HONEYCOMBS PASSED</span>
-          <span id="final-score" class="score-value">0</span>
+        <div id="shop-items"></div>
+      </div>
+
+      <!-- Tab: Ranking -->
+      <div id="tab-ranking" class="tab-pane hidden">
+        <div class="tab-pane-header">
+          <span class="tp-title">Global Top 10</span>
+          <div class="lb-header-actions">
+            <button id="btn-lb-refresh" class="btn-icon-sm" title="Refresh">↻</button>
+            <a href="leaderboard.html" target="_blank" class="btn-icon-sm" title="Full leaderboard">📊</a>
+          </div>
         </div>
-        <!-- Leaderboard — always shown -->
+
+        <!-- Scoring explanation -->
+        <div class="score-explain">
+          <span class="se-title">ℹ️ HOW SCORING WORKS</span>
+          <span class="se-body">Score = <strong>Prestige × 10,000</strong> + power bonus (max 9,999). Prestige as much as possible to climb the ranks!</span>
+        </div>
+
+        <div id="ingame-lb-wrap">
+          <div id="ingame-lb-loading" class="leaderboard-loading hidden">
+            <span class="loading-dot"></span><span class="loading-dot"></span><span class="loading-dot"></span>
+          </div>
+          <ol id="ingame-lb-list"></ol>
+        </div>
+        <div id="lb-submit-section">
+          <p class="lb-submit-hint">Add your current progress to the global ranking!</p>
+          <button id="btn-ingame-submit" class="btn-submit-score">📍 Add My Score</button>
+          <p id="lb-submit-status" class="lb-submit-status hidden"></p>
+        </div>
+      </div>
+
+      <!-- Tab: Achievements -->
+      <div id="tab-achievements" class="tab-pane hidden">
+        <div class="tab-pane-header">
+          <span class="tp-title">🏅 ACHIEVEMENTS</span>
+          <span id="achievements-count" class="tp-label">0 / 12</span>
+        </div>
+        <div id="achievements-list"></div>
+      </div>
+
+    </div>
+
+    <!-- Achievement toast container -->
+    <div id="toast-container"></div>
+
+    <!-- ══ PRESTIGE OVERLAY ══ -->
+    <div id="overlay" class="hidden">
+      <div id="overlay-card">
+        <div class="ov-header">
+          <div class="ov-emoji">✨</div>
+          <h2 class="ov-title">PRESTIGE!</h2>
+          <p class="ov-subtitle">You shattered a barrier and grew stronger!</p>
+        </div>
+        <div class="ov-stats">
+          <div class="ov-stat">
+            <span class="ov-stat-label">NEW MULTIPLIER</span>
+            <span class="ov-stat-val gold" id="ov-multiplier">x2</span>
+          </div>
+          <div class="ov-stat">
+            <span class="ov-stat-label">PRESTIGE LEVEL</span>
+            <span class="ov-stat-val cyan" id="ov-prestige-lvl">1</span>
+          </div>
+        </div>
         <div id="leaderboard-section">
           <div class="leaderboard-header"><h3>🏆 TOP 10 — GLOBAL</h3></div>
           <div id="leaderboard-loading" class="leaderboard-loading">
-            <span class="loading-dot"></span>
-            <span class="loading-dot"></span>
-            <span class="loading-dot"></span>
+            <span class="loading-dot"></span><span class="loading-dot"></span><span class="loading-dot"></span>
           </div>
           <ol id="leaderboard-list"></ol>
         </div>
-        <!-- Location prompt -->
         <div id="location-section">
-          <p class="location-text">🌍 Add your score to the leaderboard?</p>
+          <p class="location-text">🌍 Submit your score to the leaderboard?</p>
           <p class="location-subtext">We need your location to show your country's flag.</p>
           <div class="location-buttons">
-            <button id="btn-allow-location" class="btn-location-allow">📍 Add My Score</button>
+            <button id="btn-allow-location" class="btn-location-allow">📍 Submit Score</button>
             <button id="btn-skip-location" class="btn-location-skip">Skip</button>
           </div>
         </div>
-        <!-- Retry -->
-        <div class="retry-row">
-          <button id="retry" class="btn-retry">↻ PLAY AGAIN</button>
-          <p id="tries-info" class="tries-info"></p>
-        </div>
+        <button id="btn-continue" class="btn-continue">⚡ KEEP CLICKING!</button>
       </div>
     </div>
+
+    <!-- ══ IN-GAME SUBMIT MODAL ══ -->
+    <div id="submit-modal" class="hidden">
+      <div id="submit-modal-card">
+        <h3 class="sm-title">📍 Add Your Score</h3>
+        <p class="sm-sub">Allow location to display your country's flag on the leaderboard.</p>
+        <div class="sm-buttons">
+          <button id="btn-sm-allow" class="btn-location-allow">✅ Allow Location</button>
+          <button id="btn-sm-skip" class="btn-location-skip">Skip</button>
+        </div>
+        <button id="btn-sm-cancel" class="btn-sm-cancel">Cancel</button>
+      </div>
+    </div>
+
   </div>
 
   <script src="script.js"></script>
