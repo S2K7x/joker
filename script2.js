@@ -326,7 +326,6 @@
       checkAchievements();
     };
     el.addEventListener('click', buy);
-    el.addEventListener('touchstart', ev => { ev.preventDefault(); buy(); }, { passive: false });
     return el;
   }
 
@@ -413,7 +412,6 @@
       scheduleLuckyEvent();
     };
     btn.addEventListener('click',      click);
-    btn.addEventListener('touchstart', e => { e.preventDefault(); click(); }, { passive: false });
 
     const area = document.getElementById('click-area');
     if (area) area.appendChild(btn);
@@ -644,7 +642,16 @@
   }
   if (btnPrestige) {
     btnPrestige.addEventListener('click', doPrestige);
-    btnPrestige.addEventListener('touchstart', e => { e.preventDefault(); doPrestige(); }, { passive: false });
+  }
+
+  /* ── Shop collapse toggle ── */
+  const btnToggleShop = document.getElementById('btn-toggle-shop');
+  const screenGameNode = document.getElementById('screen-game');
+  if (btnToggleShop && screenGameNode) {
+    btnToggleShop.addEventListener('click', () => {
+      screenGameNode.classList.toggle('shop-collapsed');
+      btnToggleShop.textContent = screenGameNode.classList.contains('shop-collapsed') ? '🔼' : '🔽';
+    });
   }
   window.addEventListener('keydown', e => {
     if ((e.code === 'Space' || e.code === 'Enter') &&

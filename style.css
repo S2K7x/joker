@@ -420,6 +420,18 @@ html, body {
 #prestige-idle-label { display: none; }
 .btn-prestige.hidden + #prestige-idle-label { display: block; }
 
+/* ── UI Collapse ── */
+#screen-game.shop-collapsed #shop-panel {
+  flex: 0 0 auto;
+}
+#screen-game.shop-collapsed .tab-pane {
+  display: none !important;
+}
+#screen-game.shop-collapsed #click-area {
+  flex: 1 1 0;
+  max-height: none;
+}
+
 /* ── Bottom Panel (tabbed) ── */
 #shop-panel {
   flex: 1 1 0;
